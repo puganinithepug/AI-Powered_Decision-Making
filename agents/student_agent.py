@@ -76,17 +76,33 @@ class StudentAgent(Agent):
             self.wins = 0.0
             self.visits = 0
 
+            #exclusive to pruning
+            self.pruned = False
+            self.mean = 0
+            self.std = 0
+            self.ml = 0
+            self.mr = 0
+
         def is_fully_expanded(self):
             return len(self.untried_moves) == 0
 
         def best_child(self, c=1.3):
             eps = 1e-9
             total_log = math.log(self.visits + 1.0)
+
+            # exclusive to pruning: we only want unpruned children
+            unpruned_children = [ch for ch in self.children if not ch.pruned]
+            
+            #edge case: all children were pruned. use original children
+            if not unpruned_children:
+              unpruned_children = self.children
+
+
             def ucb(child):
                 exploit = child.wins / (child.visits + eps)
                 explore = c * math.sqrt(2.0 * total_log / (child.visits + eps))
                 return exploit + explore
-            return max(self.children, key=lambda ch: (ucb(ch), ch.visits))
+            return max(unpruned_children, key=lambda ch: (ucb(ch), ch.visits))
 
         def expand(self):
             if not self.untried_moves:
@@ -102,6 +118,12 @@ class StudentAgent(Agent):
         def backpropagate(self, result):
             self.visits += 1
             self.wins += result
+
+            # exclusive to pruning : update mean and std
+            self.mean = self.wins / self.visits
+            self.std = 1.0 / math.sqrt(self.visits)
+
+
             if self.parent:
                 self.parent.backpropagate(result)
 
@@ -168,10 +190,26 @@ class StudentAgent(Agent):
         root = StudentAgent.Node(deepcopy(root_board), player)
         root_player = player
         start = time.time()
+
+        # exclusive to pruning
+        random_rd = 1.5
+        min_visits = 40
+
+
         while time.time() - start < time_limit:
             node = root
             while node.is_fully_expanded() and node.children:
+                self.pp(node,min_visits,random_rd) #exclusive to pruning
                 node = node.best_child(c=1.3)
+
+                #skip if this node pruned
+                if node.pruned:
+                  continue
+            
+            #skip simulation if pruned
+            if node.pruned:
+              continue
+
             if node.untried_moves:
                 child = node.expand()
                 if child:
@@ -179,9 +217,54 @@ class StudentAgent(Agent):
             result = self.simulate(deepcopy(node.board), node.player, root_player)
             node.backpropagate(result)
 
-        if not root.children:
+
+        unpruned = [c for c in root.children if not c.pruned]
+
+        if not unpruned: #check if all children were pruned
+          unpruned = root.children
+        
+        if not unpruned: # check if no more options left
             return random_move(root_board, player)
-        return max(root.children, key=lambda c: c.visits).move
+        return max(unpruned, key=lambda c: c.visits).move
+
+
+    # --------- progressive pruning --------
+    def pp(self,node,min_visits,rd): #rd has to be between 1.5 and 2
+      #only prune after a min number of visits
+      for child in node.children:
+        if child.visits < min_visits:
+          return
+      
+      #filter unpruned children
+      unpruned = [c for c in node.children if not c.pruned]
+      if not unpruned:
+        return
+      
+      #initialize best child variable to prune other children
+      best_child = unpruned[0]
+      best_child_mean = best_child.mean
+      
+      #computing confidence interval for all unpruned children
+      for child in node.children:
+        if child.pruned: continue
+
+        child_m = child.mean
+        child_std = child.std 
+        child.ml = child_m - child_std * rd
+        child.mr = child_m + child_std * rd
+
+        if child_m > best_child_mean:
+          best_child = child
+          best_child_mean = child_m
+      
+      #prune bad candidates
+      for child in unpruned:
+        if child is best_child: continue
+        if child.mr < best_child.ml:
+          child.pruned = True
+
+
+
 
     # ---------------- step ----------------
     def step(self, board, player, opponent):
@@ -189,3 +272,4 @@ class StudentAgent(Agent):
         move = self.mcts(board, player, time_limit=1.5)
         print("MCTS agent decided in", round(time.time() - start_time,3), "seconds.")
         return move
+
