@@ -271,7 +271,7 @@ class StudentAgent(Agent):
         return move
 
     #----- minimax: step ---------
-    def minimax_step(self,board,color,opponent,moves_ahead):
+    def minimax_step(self,board,color,opponent,depth):
         legal_moves = get_valid_moves(board,color)
 
         if not legal_moves:
@@ -285,7 +285,7 @@ class StudentAgent(Agent):
             simulated_board = deepcopy(board)
             execute_move(simulated_board,move,color)
             
-            move_score = self.evaluate_min(simulated_board,moves_ahead-1,alpha,beta,color,opponent)
+            move_score = self.evaluate_min(simulated_board,depth-1,alpha,beta,color,opponent)
 
             if move_score > best_score:
                 best_score = move_score
@@ -296,8 +296,8 @@ class StudentAgent(Agent):
         return best_move or random.choice(legal_moves)
 
     # -------------minimax : min node --------------------
-    def evaluate_min(self,board,moves_ahead,alpha,beta,color,opponent):
-        if moves_ahead == 0:
+    def evaluate_min(self,board,depth,alpha,beta,color,opponent):
+        if depth == 0:
             return self.evaluate_board(board, color, opponent)
         
         moves = get_valid_moves(board,opponent)
@@ -309,7 +309,7 @@ class StudentAgent(Agent):
         for move in moves:
             simulated_board = deepcopy(board)
             execute_move(simulated_board,move,opponent)
-            val = min(val, self.evaluate_max(simulated_board,moves_ahead-1,alpha,beta,color,opponent))
+            val = min(val, self.evaluate_max(simulated_board,depth-1,alpha,beta,color,opponent))
 
             beta = min(beta,val)
 
@@ -318,8 +318,8 @@ class StudentAgent(Agent):
         return val
 
     #-------------- minimax : max node -------------------
-    def evaluate_max(self,board,moves_ahead,alpha,beta,color,opponent):
-        if moves_ahead == 0:
+    def evaluate_max(self,board,depth,alpha,beta,color,opponent):
+        if depth == 0:
             return self.evaluate_board(board,color,opponent)
         
         moves = get_valid_moves(board,color)
@@ -331,7 +331,7 @@ class StudentAgent(Agent):
             simulated_board = deepcopy(board)
             execute_move(simulated_board,move,color)
 
-            val = max(val,self.evaluate_min(simulated_board,moves_ahead-1,alpha,beta,color,opponent))
+            val = max(val,self.evaluate_min(simulated_board,depth-1,alpha,beta,color,opponent))
 
             alpha = max(alpha,val)
 
@@ -348,8 +348,11 @@ class StudentAgent(Agent):
         n = board.shape[0]
         corners = [(0, 0), (0, n - 1), (n - 1, 0), (n - 1, n - 1)]
         corner_bonus = sum(1 for (i, j) in corners if board[i, j] == color) * 5
+        #heuristic 4: mobility
+        opp_moves = len(get_valid_moves(board, opponent))
+        mobility_penalty = -opp_moves
 
-        return piece_diff + surrounded_diff + corner_bonus
+        return piece_diff + surrounded_diff + mobility_penality + corner_bonus
     
     #---- minimax: helper heuristic. idea: check layers of our color pieces ---------------
     def surrounded_pieces(self,board,color):
