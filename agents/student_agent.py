@@ -392,5 +392,5 @@ class StudentAgent(Agent):
 
     # ---------------- step ----------------
     def step(self, board, player, opponent):
-        return self.minimax_step(board,player,opponent,2)
+        return self.minimax_step(board,player,opponent,3)
 
