@@ -1,22 +1,22 @@
 # Game-Playing AI Agent: Optimized Decision-Making
 
-This is team-based higher-level coursework project. This is a mirror repository of the original (see COMP424_Project).
+This is a team-based higher-level coursework project. This is a mirror repository of the original (see COMP424_Project).
 
-This project is an exploratory, competitive challenge to create the most effectve game-playing agent for the game Attax. Student agents were matched randomly against one another in Attaxx combat, testing the efficiency of decision-making algorithms and their implementations. 
+This project is an exploratory, competitive challenge to create the most effective game-playing agent for the game Attax. Student agents were matched randomly against one another in Attaxx combat, testing the efficiency of decision-making algorithms and their implementations. 
 
 **Attaxx Briefly:**
 
-_Attaxx is a game between two opponents (agents), played with a random game board of size N × N and two different colored sets of game pieces per player (in this case Blue aand Brown)._ 
+_Attaxx is a game between two opponents (agents), played with a random game board of size N × N and two different colored sets of game pieces per player (in this case Blue and Brown)._ 
 
-- The goal for each player is to place as many of its own pieces on the game board while miniming the presence of the opponent's pieces.
+- The goal for each player is to place as many of its own pieces on the game board while minimizing the presence of the opponent's pieces.
 - The game is over when one of the player's has no more pieces left to place on the board.
 - The winner is the player that outnumbers the other by the count of pieces present on the board when the game is over.
 _Agents can choose between two types of moves - duplication or jumping._
-- Duplication allows for the player to duplicate any piece, placing the new piece adjacent to the original piece (horizontally, vertcally or diagonally adjacent square), while the original piece remains in its initial square.
+- Duplication allows for the player to duplicate any piece, placing the new piece adjacent to the original piece (horizontally, vertically or diagonally adjacent square), while the original piece remains in its initial square.
 - Jumping allows for the player to move a piece 2 squares away from its original location, in the horizontal, vertical, or diagonal direction.
 - After the move has been taken, if there are any opponent pieces adjacent to the newly placed or relocated piece, they will be converted to the current player's color.
 
-Fundamentally, the Student agent is designed to minimally outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds, this was a key design consideration during development.
+Fundamentally, the Student agent is designed to (minimally) outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds - this was a key design consideration during development.
 
 **Agent Versions Developed:** 
 
@@ -25,19 +25,19 @@ Fundamentally, the Student agent is designed to minimally outperform a Random ag
 - Early Game Minimax Late Game MCTS Agent
 - Minimax Transposition Table and Zobrist
 
-_For detailed analysis of each agent's behavior and performance, refer to the Game Playing AI Agent - Optimized Decision-Making Techniques paper._
+_For detailed analysis of each agent's behavior and performance, refer to the "Game Playing AI Agent: Optimized Decision-Making Techniques" paper._
 
 **General Overview of Agents**
 
 - All agent versions developed by the team consistently outperformed both random agent and Greedy Corners agent (default agents).
 - All versions used heuristics which included the heuristics of the Greedy Corners agent, with additional specifications for improved performance.
-- The primary focus during development was not on outperforming default agents, but rather on improving the efficiency of execution, ie minimizing the turn out time per decision (keeping it consistently under 2 seconds).
+- The primary challenge during development was not ensuring that the Student agent outperforms default agents, but rather on improving the efficiency of execution - minimizing turn out time per decision (keeping it consistently under 2 seconds).
 
-The best performing agent implemented a hybrid approach, combining Minimax optimized with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing - the key component for consistently timely decisions. 
+The best performing agent implemented a hybrid approach, combining Minimax optimized with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing.
 
-- The **alpha-beta pruning** reduced the search space by preemptively eliminating branches that do not change the outcome. This effectively reduces noise and allowing the agent to focus on proactive decision-making.
-- **Iterative deepening** is a search algorithm that incrementally increases search depth ensuring that search time is within the 2 second deliberation limit.
-- The **transposition table with Zobrist hashing** is an optimization which prevents the agent from repeating previously explored board positions, thus increasing efficiency of decision-making.
+- **Alpha-beta pruning** reduced the search space by preemptively eliminating branches that do not change the outcome. This effectively reduced noise, allowing the agent to focus on proactive decision-making.
+- **Iterative deepening** is a search algorithm incrementally increases search depth, thus putting a reasonable restriction on search time - ensuring that decision-making is within the 2 second limit.
+- The **transposition table with Zobrist hashing** is an optimization which prevents the agent from repeating previously explored board positions, thus increasing the efficiency of decision-making and reducing suboptimal behavior.
 
 ## Setup
 
