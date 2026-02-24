@@ -11,7 +11,9 @@ _Attaxx is a game between two opponents (agents), played with a random game boar
 - The goal for each player is to place as many of its own pieces on the game board while minimizing the presence of the opponent's pieces.
 - The game is over when one of the player's has no more pieces left to place on the board.
 - The winner is the player that outnumbers the other by the count of pieces present on the board when the game is over.
+- 
 _Agents can choose between two types of moves - duplication or jumping._
+
 - Duplication allows for the player to duplicate any piece, placing the new piece adjacent to the original piece (horizontally, vertically or diagonally adjacent square), while the original piece remains in its initial square.
 - Jumping allows for the player to move a piece 2 squares away from its original location, in the horizontal, vertical, or diagonal direction.
 - After the move has been taken, if there are any opponent pieces adjacent to the newly placed or relocated piece, they will be converted to the current player's color.
