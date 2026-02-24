@@ -35,9 +35,9 @@ _For detailed analysis of each agent's behavior and performance, refer to the Ga
 
 The best performing agent implemented a hybrid approach, combining Minimax optimized with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing - the key component for consistently timely decisions. 
 
-- The alpha-beta pruning helped reduce the search space by not exploring branches that will not change the outcome. This allowed the agent to see more moves ahead in the same given time.
-- Iterative deepening helps find the best move with its gradual increase of search depth while making sure it does not surpass the time limit. This guarantees the agent will not return any random move, and finds the best one given the time constraint.
-- The transposition table with Zobrist hashing is another form of optimization: it helps the agent avoid repeating board positions that were already explored previously, helping to increase search depth. All of these components produce an optimized agent with reasonable search depth.
+- The **alpha-beta pruning** reduced the search space by preemptively eliminating branches that do not change the outcome. This effectively reduces noise and allowing the agent to focus on proactive decision-making.
+- **Iterative deepening** is a search algorithm that incrementally increases search depth ensuring that search time is within the 2 second deliberation limit.
+- The **transposition table with Zobrist hashing** is an optimization which prevents the agent from repeating previously explored board positions, thus increasing efficiency of decision-making.
 
 ## Setup
 
