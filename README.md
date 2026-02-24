@@ -61,6 +61,8 @@ pip install -r requirements.txt
 
 A game between two agents, when initialized, can be traced through the console move by move, in the order that the players take turns making moves.
 
+_For example:_
+
 ```bash
 python simulator.py --player_1 random_agent --player_2 random_agent
 ```
@@ -68,6 +70,7 @@ python simulator.py --player_1 random_agent --player_2 random_agent
 ## Visualizing a game
 
 A game between two agents can be visualized using the `--display` flag, slowing the game for better analysis with `--display_delay`.
+
 _For example:_
 
 ```bash
@@ -77,6 +80,7 @@ python simulator.py --player_1 random_agent --player_2 random_agent --display
 ## Play on your own!
 
 It is also possible to try manually playing (as a human agent):
+
 _For example:_
 
 ```bash
@@ -84,6 +88,8 @@ python simulator.py --player_1 human_agent --player_2 random_agent --display
 ```
 
 ## Autoplaying multiple games
+
+_For example:_
 
 ```bash
 python simulator.py --player_1 random_agent --player_2 random_agent --autoplay
