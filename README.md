@@ -2,10 +2,12 @@
 
 This is team-based higher-level coursework project. This is a mirror repository of the original (see COMP424_Project).
 
-It is is an exploratory, competitive challenge to create the most effectve game-playing agent for the game Attax. Student agents were matched randomly against one another, testing the efficiency of decision-making algorithms and their implementations. 
+This project is an exploratory, competitive challenge to create the most effectve game-playing agent for the game Attax. Student agents were matched randomly against one another in Attaxx combat, testing the efficiency of decision-making algorithms and their implementations. 
 
-**Attaxx Briefly**
-_Attaxx is a game between two opponents (agents), played with a random game board of size $N \times N$ and two different colored sets of game pieces per player (in this case Blue aand Brown)._ 
+**Attaxx Briefly:**
+
+_Attaxx is a game between two opponents (agents), played with a random game board of size N × N and two different colored sets of game pieces per player (in this case Blue aand Brown)._ 
+
 - The goal for each player is to place as many of its own pieces on the game board while miniming the presence of the opponent's pieces.
 - The game is over when one of the player's has no more pieces left to place on the board.
 - The winner is the player that outnumbers the other by the count of pieces present on the board when the game is over.
@@ -14,25 +16,28 @@ _Agents can choose between two types of moves - duplication or jumping._
 - Jumping allows for the player to move a piece 2 squares away from its original location, in the horizontal, vertical, or diagonal direction.
 - After the move has been taken, if there are any opponent pieces adjacent to the newly placed or relocated piece, they will be converted to the current player's color.
 
-Fundamentally, the Student agent is designed to minimally outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds.
+Fundamentally, the Student agent is designed to minimally outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds, this was key desgn aspect during development.
 
-**Agent versions developed:** 
-Minimax with α − β Pruning, Hybrid Minimax MCTS Step Agent, Early Game Minimax Late Game MCTS Agent, Minimax Transposition Table and Zobrist.
+**Agent Versions Developed:** 
+
+- Minimax with α − β Pruning
+- Hybrid Minimax MCTS Step Agent
+- Early Game Minimax Late Game MCTS Agent
+- Minimax Transposition Table and Zobrist
+
 _For detailed analysis of each agent's behavior and performance, refer to the Game Playing AI Agent - Optimized Decision-Making Techniques paper._
 
-All agent versions developed and presented in this paper beat both random agent and Greedy Corners agent (default agents). All versions were developed using heuristics inspired by those used by the Greedy Corners agent. The main concern during development was not outperforming default agents, but rather efficiency - minimzing the turn out time for the Student agent.
-In order to ensure that the final Student agent complies with the requirements of Ataxx combat we made sure our final product’s turn out time is consistently under 2 seconds.
+**General Overview of Agents**
 
-The strongest algorithm created is an algorithm that uses minimax with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing. 
+- All agent versions developed by the team consistently outperformed both random agent and Greedy Corners agent (default agents).
+- All versions used heuristics which included the heuristics of the Greedy Corners agent, with additional specifications for improved performance.
+- The primary focus during development was not on outperforming default agents, but rather on improving the efficiency of execution, ie minimzing the turn out time per decision (keeping it consistently under 2 seconds).
 
-The alpha-beta pruning helped reduce the search space by not exploring branches that will not change the
-outcome. This allowed the agent to see more moves ahead in the same given time. 
-Iterative deepening helps find the best move with its gradual increase of search depth while making
-sure it does not surpass the time limit. This guarantees the agent will not return any random
-move, and finds the best one given the time constraint. The transposition table with
-Zobrist hashing is another form of optimization: it helps the agent avoid repeating board
-positions that were already explored previously, helping to increase search depth. All of
-these components produce an optimized agent with reasonable search depth.
+The best performing agent implemented a hybrid approach, combining Minimax optimized with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing - the key component for consistently timely decisions. 
+
+- The alpha-beta pruning helped reduce the search space by not exploring branches that will not change the outcome. This allowed the agent to see more moves ahead in the same given time.
+- Iterative deepening helps find the best move with its gradual increase of search depth while making sure it does not surpass the time limit. This guarantees the agent will not return any random move, and finds the best one given the time constraint.
+- The transposition table with Zobrist hashing is another form of optimization: it helps the agent avoid repeating board positions that were already explored previously, helping to increase search depth. All of these components produce an optimized agent with reasonable search depth.
 
 ## Setup
 
