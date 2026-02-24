@@ -16,7 +16,7 @@ _Agents can choose between two types of moves - duplication or jumping._
 - Jumping allows for the player to move a piece 2 squares away from its original location, in the horizontal, vertical, or diagonal direction.
 - After the move has been taken, if there are any opponent pieces adjacent to the newly placed or relocated piece, they will be converted to the current player's color.
 
-Fundamentally, the Student agent is designed to minimally outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds, this was key desgn aspect during development.
+Fundamentally, the Student agent is designed to minimally outperform a Random agent (every decision is random) and the Greedy Corners Agent - implements a greedy algorithm that focuses primarily on covering the corners of the game board with its pieces. Per requirements of inter-agent combat, the turn out time per decision step for the Student agent must also be under 2 seconds, this was a key design consideration during development.
 
 **Agent Versions Developed:** 
 
@@ -31,7 +31,7 @@ _For detailed analysis of each agent's behavior and performance, refer to the Ga
 
 - All agent versions developed by the team consistently outperformed both random agent and Greedy Corners agent (default agents).
 - All versions used heuristics which included the heuristics of the Greedy Corners agent, with additional specifications for improved performance.
-- The primary focus during development was not on outperforming default agents, but rather on improving the efficiency of execution, ie minimzing the turn out time per decision (keeping it consistently under 2 seconds).
+- The primary focus during development was not on outperforming default agents, but rather on improving the efficiency of execution, ie minimizing the turn out time per decision (keeping it consistently under 2 seconds).
 
 The best performing agent implemented a hybrid approach, combining Minimax optimized with alpha-beta pruning, iterative deepening, and a transposition table using Zobrist hashing - the key component for consistently timely decisions. 
 
