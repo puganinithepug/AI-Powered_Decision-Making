@@ -25,7 +25,7 @@ Fundamentally, the Student agent is designed to (minimally) outperform a Random 
 - Minimax with α − β Pruning
 - Hybrid Minimax MCTS Step Agent
 - Early Game Minimax Late Game MCTS Agent
-- Minimax Transposition Table and Zobrist
+- Minimax Transposition Table and Zobrist Hashing
 
 _For detailed analysis of each agent's behavior and performance, refer to the "Game Playing AI Agent: Optimized Decision-Making Techniques" paper._
 
